@@ -29,7 +29,12 @@
 						<button type="submit" class="btn btn-sm btn-success">Submit</button>
 					</form>
 				</div>
-			</div>	
+			</div>
+			<?php
+				//echo $_SERVER['HTTP_HOST'];
+				//echo $_SERVER['SERVER_NAME'];
+			?>
+			
 		</div>
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -52,11 +57,20 @@
 					$.ajax({
 						url:'http://localhost/mahima/login_ajax/ajax.php',
 						data:{
+							action:'login',
 							eml:email,
 							pw:pwd
 						},
 						success:function(result,status,xhr){
-							console.log('ok');
+							console.log(result);
+							if(result =='valid'){
+								//alert('Welcome');
+								//window.load('dashboard.php');
+								window.location ="http://<?php echo $_SERVER['HTTP_HOST'];?>/mahima/login_ajax/dashboard.php";
+							}else{
+								alert('Invalid Credentials');
+								$('#email').focus();
+							}
 						}
 					});
 				});
