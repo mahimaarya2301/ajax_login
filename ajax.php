@@ -1,4 +1,6 @@
 <?php
+	session_start();
+
 	if($_GET['action'] == 'login'){
 		//echo 'Login Block';
 		//Receive data
@@ -28,10 +30,40 @@
 			echo 'valid';
 		}*/
 		
-		echo ($nor == 0) ?'invalid':'valid';
+		if($nor == 0){
+			$data = [
+				'status'=>404,
+				'message'=>'Invalid Username And Password'
+			];
+			//echo 'invalid';
+		}else{
+			
+			$row = mysqli_fetch_assoc($result);
+			
+			//var_dump($row);
+			//$_ Super Global Variables
+		
+			//Store UserInfo In Session Variables
+		
+			$_SESSION['userData'] = $row;
+			//SESSION Variables
+		
+			//echo 'valid';
+			$data = array(
+				'status'=>200,
+				'message'=>'Welcome'
+			);
+		
+		}
 		
 		//5.DB Connection Close
 		mysqli_close($con);
+		
+		//Javascript Object Notation /XML
+	
+		//PHP Object/Associative Array -> JSON String
+		echo json_encode($data);
+		//echo ($nor == 0) ?'invalid':'valid';
 		
 	}
 	if($_GET['action'] == 'registration'){
